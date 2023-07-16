@@ -1,0 +1,70 @@
+{
+	"format_version": "1.16.0",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "rot:ah",
+			"is_spawnable": true,
+			"is_summonable": true,
+			"is_experimental": false
+		},
+		"component_groups": {
+			"despawn": {
+				"minecraft:instant_despawn": {}
+			},
+			"look": {
+				"minecraft:behavior.look_at_player": {
+					"priority": 0,
+					"look_distance": 6.0,
+					"probability": 100
+				}
+			},
+			"nolook": {
+				"minecraft:behavior.look_at_player": {
+					"priority": 0,
+					"look_distance": 6.0,
+					"probability": 0
+				}
+			}
+		},
+		"components": {
+			"minecraft:type_family": { "family": [ "rot" ] },
+			"minecraft:fire_immune": true,
+            "minecraft:nameable": {
+                "alwaysShow": true,
+                "allowNameTagRenaming": true
+            },
+			"minecraft:damage_sensor": {
+				"triggers": [
+					{
+						"cause": "all",
+						"deals_damage": false
+					}
+				]
+			},
+			"minecraft:collision_box": {
+				"width": 0.6,
+				"height": 1.8
+			},
+			"minecraft:physics": {
+				"has_collision": true,
+				"has_gravity": true
+			},
+			"minecraft:health": {
+				"value": 20
+			}
+		},
+		"events": {
+			"rot:despawn": {
+				"add": { "component_groups": ["despawn"] }
+			},
+			"rot:look": {
+				"add": { "component_groups": ["look"] },
+				"remove": { "component_groups": [ "nolook" ] }
+			},
+			"rot:nolook": {
+				"add": { "component_groups": [ "nolook" ] },
+				"remove": { "component_groups": [ "look" ] }
+			}
+		}
+	}
+}

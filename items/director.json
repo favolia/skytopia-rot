@@ -1,0 +1,49 @@
+{
+  "format_version": "1.16.100",
+  "minecraft:item": {
+    "description": {
+      "identifier": "rot:director",
+      "category": "equipment"
+    },
+    "components": {
+      "minecraft:icon": {
+        "texture": "rot:director"
+      },
+      "minecraft:display_name": {
+        "value": "§b§lDirector Mode"
+      },
+      "minecraft:hand_equipped": true,
+      "minecraft:max_stack_size": 1,
+      "minecraft:allow_off_hand": false,
+      "minecraft:render_offsets": {
+        "main_hand": {
+          "first_person": {
+            "position": [
+              0.405,
+              -0.145,
+              -0.8
+            ],
+            "scale": [
+              0.002,
+              0.002,
+              0.002
+            ]
+          },
+          "third_person": {
+            "position": [
+              0.13,
+              0.76,
+              -0.5
+            ],
+            "scale": [
+              0.003,
+              0.003,
+              0.003
+            ]
+          }
+        }
+      }
+    },
+    "events": {}
+  }
+}
