@@ -1,21 +1,3 @@
-/*
- Developers and Contributors:
-Moises (OWNER/CEO/Developer),
-Aex66 (Developer)
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-__________ ___________________
-\______   \\_____  \__    ___/
- |       _/ /   |   \|    |
- |    |   \/    |    \    |
- |____|_  /\_______  /____|
-        \/         \/
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-© Copyright 2023 all rights reserved by Mo9ses. Do NOT steal, copy the code, or claim it as yours!
-Please message Mo9ses#8583 on Discord, or join the  discord: https://discord.com/invite/2ADBWfcC6S
-Docs: https://docs.google.com/document/d/1hasFU7_6VOBfjXrQ7BE_mTzwacOQs5HC21MJNaraVgg
-Website: https://www.mc.ml
-Thank you!
-*/
 import { system, world } from '@minecraft/server';
 import { MS, timeRegex } from '../Paragraphs/ConvertersParagraphs.js';
 import { staticBook, staticValues } from './argumentTypes.js';
@@ -48,19 +30,19 @@ export class CommandPaper {
      */
     create(info) {
         if (info.name.replace(/[a-zA-Z0-9-_ ]/g, '').length)
-            throw console.warn(`Cannot create command "${info.name}". Command names cannot have special symbols or characters.`);
+            throw console.warn(`Tidak dapat membuat perintah "${info.name}". Nama-nama perintah tidak boleh mengandung simbol atau karakter khusus.`);
         const oldIndex = this.list.findIndex(cmd => cmd.name === info.name);
         if (oldIndex >= 0) {
             this.list.splice(oldIndex, 1);
             console.warn(`Command ${info.name} has been overwritten`);
         }
         if (info.aliases && this.list.some(cmd => cmd.aliases && cmd.aliases.some(a => info.aliases.some(c => a === c))))
-            throw console.warn(`Cannot create command "${info.name}" because there is already a command with that alias.`);
+            throw console.warn(`Tidak dapat membuat perintah "${info.name}" karena sudah ada perintah dengan alias yang sama.`);
         return new command(Object.assign(info, {
             name: info.name.toLowerCase(),
-            description: info.description ?? 'Basic command description',
+            description: info.description ?? 'Deskripsi perintah dasar',
             aliases: info.aliases?.map(a => a.toLowerCase()) ?? [],
-            category: info.category ? info.category[0].toUpperCase() + info.category.slice(1).toLowerCase() : 'uncategorized',
+            category: info.category ? info.category[0].toUpperCase() + info.category.slice(1).toLowerCase() : 'tidak terkategori',
             developers: info.developers ?? ['Mo9ses']
         }), this);
     }
@@ -297,7 +279,7 @@ export class CommandPaper {
             const form = new ActionForm();
             form.setTitle(`§6§l${cmd.name}`);
             args.forEach(a => form.addButton(`§a${a}`));
-            form.addButton('§4§lClose');
+            form.addButton('§4§lTutup');
             console.warn('sent');
             await form.send(player);
         }
@@ -367,7 +349,7 @@ class command {
         let arg = [].concat(args), test = [];
         arg.forEach(a => !test.includes(a) && test.push(a));
         if (arg.length !== test.length)
-            throw console.warn(`Please check your starting args for "${this.name}"!`);
+            throw console.warn(`Mohon periksa argumen awal Kamu untuk "${this.name}"!`);
         this.handle.list[this.index].sT = [arg, needArg ?? true];
         return this;
     }
@@ -404,7 +386,7 @@ class command {
      */
     staticType(name, type, callback, nextArgs, needValue, needNextArg) {
         if (Object.keys(this.handle.list[this.index].aR).includes(name))
-            throw console.warn(`Failed to add argument "${name}" to "${this.name}". This argument/type already exists!`);
+            throw console.warn(`Gagal menambahkan argumen "${name}" ke "${this.name}". Argumen/tipe ini sudah ada!`);
         const nA = [].concat(nextArgs ?? []);
         Object.assign(this.handle.list[this.index].aR, { [name]: {
                 tY: 'sta',
@@ -428,7 +410,7 @@ class command {
      */
     booleanType(name, callback, nextArgs, needNextArg) {
         if (Object.keys(this.handle.list[this.index].aR).includes(name))
-            throw console.warn(`Failed to add argument "${name}" to "${this.name}". This argument/type already exists!`);
+            throw console.warn(`Gagal menambahkan argumen "${name}" ke "${this.name}". Argumen/tipe ini sudah ada!`);
         const nA = [].concat(nextArgs ?? []);
         Object.assign(this.handle.list[this.index].aR, { [name]: {
                 tY: 'boo',
@@ -452,7 +434,7 @@ class command {
      */
     locationType(name, callback, nextArgs, loaded, needNextArg) {
         if (Object.keys(this.handle.list[this.index].aR).includes(name))
-            throw console.warn(`Failed to add argument "${name}" to "${this.name}". This argument/type already exists!`);
+            throw console.warn(`Gagal menambahkan argumen "${name}" ke "${this.name}". Argumen/tipe ini sudah ada!`);
         const nA = [].concat(nextArgs ?? []);
         Object.assign(this.handle.list[this.index].aR, { [name]: {
                 tY: 'loc',
@@ -477,9 +459,9 @@ class command {
      */
     numberType(name, callback, nextArgs, data, needNextArg) {
         if (Object.keys(this.handle.list[this.index].aR).includes(name))
-            throw console.warn(`Failed to add argument "${name}" to "${this.name}". This argument/type already exists!`);
+            throw console.warn(`Gagal menambahkan argumen "${name}" ke "${this.name}". Argumen/tipe ini sudah ada!`);
         if (data && data.min > data.max)
-            throw console.warn(`Argument "${name}" from command "${this.name}" cannot have a min value greater than the max.`);
+            throw console.warn(`Argumen "${name}" dari perintah "${this.name}" tidak bisa memiliki nilai minimal yang lebih besar dari maksimal.`);
         const nA = [].concat(nextArgs ?? []);
         Object.assign(this.handle.list[this.index].aR, { [name]: {
                 tY: 'num',
@@ -505,7 +487,7 @@ class command {
      */
     playerType(name, callback, online, nextArgs, data, needNextArg) {
         if (Object.keys(this.handle.list[this.index].aR).includes(name))
-            throw console.warn(`Failed to add argument "${name}" to "${this.name}". This argument/type already exists!`);
+            throw console.warn(`Gagal menambahkan argumen "${name}" to "${this.name}". Argumen/tipe ini sudah ada!`);
         const nA = [].concat(nextArgs ?? []);
         Object.assign(this.handle.list[this.index].aR, { [name]: {
                 tY: 'plr',
@@ -530,7 +512,7 @@ class command {
      */
     timeType(name, callback, nextArgs, data, needNextArg) {
         if (Object.keys(this.handle.list[this.index].aR).includes(name))
-            throw console.warn(`Failed to add argument "${name}" to "${this.name}". This argument/type already exists!`);
+            throw console.warn(`Gagal menambahkan argumen "${name}" to "${this.name}". Argumen/tipe ini sudah ada!`);
         const nA = [].concat(nextArgs ?? []);
         Object.assign(this.handle.list[this.index].aR, { [name]: {
                 tY: 'tim',
@@ -557,10 +539,10 @@ class command {
      */
     dynamicType(name, value, callback, nextArgs, needValue, length, needNextArg) {
         if (Object.keys(this.handle.list[this.index].aR).includes(name))
-            throw console.warn(`Failed to add argument "${name}" to "${this.name}". This argument/type already exists!`);
+            throw console.warn(`Gagal menambahkan argumen "${name}" to "${this.name}". Argumen/tipe ini sudah ada!`);
         const val = [].concat(value);
         if (val.some(v => staticValues.includes(v)))
-            throw console.warn(`Dynamic argument "${name}" from command "${this.name}" can't have a value that is already in a static type.`);
+            throw console.warn(`Argumen dinamis "${name}" dari perintah "${this.name}" tidak bisa memiliki nilai yang sudah ada di dalam tipe statis.`);
         const nA = [].concat(nextArgs ?? []);
         Object.assign(this.handle.list[this.index].aR, { [name]: {
                 tY: 'dyn',
@@ -587,7 +569,7 @@ class command {
      */
     unknownType(name, callback, length, filter, nextArgs, needNextArg) {
         if (Object.keys(this.handle.list[this.index].aR).includes(name))
-            throw console.warn(`Failed to add argument "${name}" to "${this.name}". This argument/type already exists!`);
+            throw console.warn(`Gagal menambahkan argumen "${name}" to "${this.name}". Argumen/tipe ini sudah ada!`);
         const nA = [].concat(nextArgs ?? []);
         Object.assign(this.handle.list[this.index].aR, { [name]: {
                 tY: 'ukn',
@@ -601,7 +583,7 @@ class command {
     }
     bridge(name, value, argNames, callback, needArgs) {
         if (Object.keys(this.handle.list[this.index].aR).includes(name))
-            throw console.warn(`Failed to add bridge "${name}" to "${this.name}". This argument/type already exists!`);
+            throw console.warn(`Gagal menambahkan jembatan "${name}" ke "${this.name}". Argumen/tipe ini sudah ada!`);
         const val = [].concat(argNames);
         Object.assign(this.handle.list[this.index].aR, { [name]: {
                 tY: 'dyn',
@@ -626,7 +608,7 @@ class command {
             if (info.admin)
                 tags.push(quick.adminTag);
             if (!arg)
-                throw console.warn(`Failed editing argument "${a}" from command "${this.name}" because it does not exist!`);
+                throw console.warn(`Gagal mengedit argumen "${a}" dari perintah "${this.name}" karena argumen tersebut tidak ada!`);
             Object.assign(this.handle.list[this.index].aR[a], {
                 nA: info.nextArgs ?? arg.nA,
                 tG: tags,

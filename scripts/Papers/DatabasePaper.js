@@ -1,21 +1,3 @@
-/*
-ROT Developers and Contributors:
-Moises (OWNER/CEO/Developer),
-Aex66 (Developer)
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-__________ ___________________
-\______   \\_____  \__    ___/
- |       _/ /   |   \|    |
- |    |   \/    |    \    |
- |____|_  /\_______  /____|
-        \/         \/
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-© Copyright 2023 all rights reserved by Mo9ses. Do NOT steal, copy the code, or claim it as yours!
-Please message Mo9ses#8583 on Discord, or join the ROT discord: https://discord.com/invite/2ADBWfcC6S
-Website: https://www.rotmc.ml
-Docs: https://docs.google.com/document/d/1hasFU7_6VOBfjXrQ7BE_mTzwacOQs5HC21MJNaraVgg
-Thank you!
-*/
 import { system, world } from '@minecraft/server';
 import { textToAscii, asciiToText } from './Paragraphs/ConvertersParagraphs.js';
 import Server from './ServerPaper.js';
@@ -54,11 +36,11 @@ class DatabasePaper {
         if (!identifier)
             identifier = '';
         if (identifier === 'DB')
-            throw Error('You cannot create a database with the identifier "DB"');
+            throw Error('Kamu tidak dapat membuat database dengan pengenal "DB"');
         if (table === 'model')
-            throw Error('You cannot create a database with the table "model"');
+            throw Error('Kamu tidak dapat membuat database dengan pengenal "model"');
         if (table.includes(':') || identifier.includes(':'))
-            throw Error(`The database "${table}" table name or identifier cannot include a ":"`);
+            throw Error(`Nama tabel atau pengenal database "${table}" tidak boleh mengandung ":"`);
         Server.queueCommand(`scoreboard players set "${identifier}" "DB:model" 0`);
         try {
             await world.getDimension('overworld').runCommandAsync(`scoreboard objectives add "DB:${identifier}" dummy`);

@@ -163,7 +163,7 @@ export class ModalForm {
      */
     addSlider(label, minimumValue, maximumValue, valueStep, defaultValue) {
         if (minimumValue > maximumValue)
-            throw new Error('[Forms UI Silder] Error - the Min value cannot be greater than the Max value');
+            throw new Error('[Antarmuka UI Geser Forms] Kesalahan - nilai Min tidak boleh lebih besar dari nilai Max');
         this.form.slider(label, minimumValue, maximumValue, valueStep ?? 1, defaultValue ?? ~~(maximumValue / minimumValue));
     }
     /**

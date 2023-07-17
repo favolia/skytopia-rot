@@ -1,26 +1,3 @@
-/*
-ROT Developers and Contributors:
-Moises (OWNER/CEO/Developer),
-notbeer (ROT's base code)
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-__________ ___________________
-\______   \\_____  \__    ___/
- |       _/ /   |   \|    |
- |    |   \/    |    \    |
- |____|_  /\_______  /____|
-        \/         \/
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-© Copyright 2023 all rights reserved by Mo9ses. Do NOT steal, copy the code, or claim it as yours!
-Please message Mo9ses#8583 on Discord, or join the ROT discord: https://discord.com/invite/2ADBWfcC6S
-Docs: https://docs.google.com/document/d/1hasFU7_6VOBfjXrQ7BE_mTzwacOQs5HC21MJNaraVgg
-Website: https://www.rotmc.ml
-Thank you!
-*****************************************************
-* This will display in text in thousands, millions and etc... For ex: "1400 -> "1.4k", "1000000" -> "1M", etc...
-* @param {number} number The number you want to convert
-* @returns {string}
-* @example metricNumbers(15000);
-*/
 export const metricNumbers = (value, fixed) => {
     const types = ["", "k", "M", "B", "T", "QT", "ST", "Z", "Y"], selectType = Math.log10(value) / 3 | 0;
     if (selectType == 0)
@@ -132,12 +109,12 @@ export function MS(value, { compactDuration, fullDuration, avoidDuration } = {})
         }
         if (typeof value === 'number')
             return toDuration(value, { compactDuration, fullDuration, avoidDuration });
-        throw new Error('Value is not a string or a number');
+        throw new Error('Nilai bukan merupakan string atau angka.');
     }
     catch (err) {
         const message = isError(err)
             ? `${err.message}. Value = ${JSON.stringify(value)}`
-            : 'An unknown error has occured.';
+            : 'Telah terjadi kesalahan yang tidak diketahui.';
         throw new Error(message);
     }
 }

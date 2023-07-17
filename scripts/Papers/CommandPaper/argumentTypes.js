@@ -1,117 +1,117 @@
 export const staticBook = {
     create: {
-        des: 'Create method, IDK',
+        des: 'Buat metode',
         val: ['create', 'c-', 'make', 'new', 'm-'],
         con: (val) => val.replace(/[a-zA-Z0-9-_ ]/g, '') === '',
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     delyeet: {
-        des: 'Deletes stuff',
+        des: 'Menghapus barang-barang Saya',
         val: ['delete', 'delyeet', 'd-', 'yeet'],
         con: (val) => val.replace(/[a-zA-Z0-9-_ ]/g, '') === '',
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     add: {
-        des: 'Adds stuff',
+        des: 'Menambahkan barang-barang',
         val: ['add', 'a-', 'push'],
         con: (val) => true,
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     remove: {
-        des: 'Removes stuff',
+        des: 'Menghapus barang-barang',
         val: ['remove', 'r-', 'rem', 're', 'delete'],
         con: (val) => val.replace(/[a-zA-Z0-9-_ ]/g, '') === '',
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     save: {
-        des: 'Saves stuff',
+        des: 'Menyimpan barang-barang',
         val: ['save', 's-', 'sav'],
         con: (val) => val.replace(/[a-zA-Z0-9-_ ]/g, '') === '',
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     list: {
-        des: 'See stuff',
+        des: 'Melihat barang-barang',
         val: ['list', 'l-', 'lis', 'tell'],
         con: (val) => val ? val.replace(/[a-zA-Z0-9-_ ]/g, '') === '' : true,
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     sell: {
-        des: 'Sell stuff',
+        des: 'Menjual barang-barang',
         val: [`sell`, 's-'],
         con: (val) => val /* You can write code here to make sure it's a Minecraft item without writing it every time inside a commond*/,
         err: 'That is not a Minecraft item'
     },
     teleport: {
-        des: 'Relative coordinates',
+        des: 'Koordinat relatif',
         val: ['tp', 'teleport', 'go', 'go-to'],
         con: (val) => val.replace(/[a-zA-Z0-9-_ ]/g, '') === '',
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     send: {
-        des: '',
+        des: 'Kirim',
         val: ['send'],
         con: (val) => val.replace(/[a-zA-Z0-9-_ ]/g, '') === '',
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     accept: {
-        des: '',
+        des: 'Terima',
         val: ['accept', 'ac', 'ok'],
         con: (val) => val.replace(/[a-zA-Z0-9-_ ]/g, '') === '',
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     decline: {
-        des: '',
+        des: 'Tolak',
         val: ['deny', 'decline', 'no', 'cancel'],
         con: (val) => val.replace(/[a-zA-Z0-9-_ ]/g, '') === '',
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     play: {
-        des: '',
+        des: 'Bermain',
         val: ['play', 'p', 'start'],
         con: (val) => val ? val.replace(/[a-zA-Z0-9-_ ]/g, '') === '' : true,
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     try: {
-        des: '',
+        des: 'Mencoba',
         val: ['try', 'tryo', 'tr'],
         con: (val) => val ? val.replace(/[a-zA-Z0-9-_ ]/g, '') === '' : true,
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     quit: {
-        des: '',
+        des: 'Keluar',
         val: ['quit', 'q', 'qu'],
         con: (val) => val ? val.replace(/[a-zA-Z0-9-_ ]/g, '') === '' : true,
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     set: {
-        des: '',
+        des: 'Menambahkan',
         val: ['set', 'push', 'put'],
         con: (val) => val ? val.replace(/[a-zA-Z0-9-_ ]/g, '') === '' : true,
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     rename: {
         des: '',
         val: ['rename', 'name', 'rn', 'rname'],
         con: () => true,
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     join: {
         desc: '',
         val: ['join', 'enter'],
         con: () => true,
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     replace: {
         desc: '',
         val: ['replace'],
         con: () => true,
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     toggle: {
         desc: '',
         val: ['toggle'],
         con: () => true,
-        err: 'You cannot use special characters!'
+        err: 'Kamu tidak bisa menggunakan karakter khusus!'
     },
     top: {
         desc: '',

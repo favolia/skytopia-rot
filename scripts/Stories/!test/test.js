@@ -19,7 +19,7 @@ Thank you!
 import Commands from "../../Papers/CommandPaper/CommandPaper.js";
 const cmd = Commands.create({
     name: 'test',
-    description: 'Let\'s you test a ROT command by having a AI run random operations.',
+    description: 'Memungkinkan Anda menguji perintah ROT dengan membiarkan AI menjalankan operasi acak.',
     aliases: ['t-'],
     category: 'Dev',
     admin: true
