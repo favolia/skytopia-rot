@@ -1,21 +1,3 @@
-/*
-ROT Developers and Contributors:
-Moises (OWNER/CEO/Developer),
-Aex66 (Developer)
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-__________ ___________________
-\______   \\_____  \__    ___/
- |       _/ /   |   \|    |
- |    |   \/    |    \    |
- |____|_  /\_______  /____|
-        \/         \/
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-© Copyright 2023 all rights reserved by Mo9ses. Do NOT steal, copy the code, or claim it as yours!
-Please message Mo9ses#8583 on Discord, or join the ROT discord: https://discord.com/invite/2ADBWfcC6S
-Docs: https://docs.google.com/document/d/1hasFU7_6VOBfjXrQ7BE_mTzwacOQs5HC21MJNaraVgg
-Website: https://www.rotmc.ml
-Thank you!
-*/
 import { system, world } from '@minecraft/server';
 import Commands from '../../Papers/CommandPaper/CommandPaper.js';
 import Database from '../../Papers/DatabasePaper.js';
@@ -24,7 +6,7 @@ import Player from '../../Papers/PlayerPaper.js';
 import Server from '../../Papers/ServerPaper.js';
 const cmd = Commands.create({
     name: 'scoreboard',
-    description: 'Make a personal custom sidebar for players!',
+    description: 'Membuat sidebar pribadi khusus untuk pemain!',
     aliases: ['score', 'board', 'scoreboard', 'sidebar', 'personal-sidebar', 'sb'],
     category: 'Server',
     admin: true,
@@ -45,21 +27,21 @@ cmd.callback((plr, args) => {
 });
 cmd.staticType('create', 'create', (plr, val) => {
     if (sc.has(val))
-        return plr.error(`This server already has the sidebar "§6${val}§r§e"!`, 'Sidebar');
+        return plr.error(`Server ini sudah memiliki sidebar "§6${val}§r§e"!`, 'Sidebar');
     if (val.replace(/[a-zA-Z0-9]/g, '') !== '')
-        return plr.error('You cannot use special characters!', 'Sidebar');
+        return plr.error('Kamu tidak dapat menggunakan karakter khusus dalam hal ini!', 'Sidebar');
     sc.write(val, [val]);
-    return plr.send(`The sidebar §6${val}§e has been created! You can make it show up on a player's screen by typing "§6/tag "playername" add ${val}§r§e"`, 'Sidebar');
+    return plr.send(`Sidebar §6${val}§e telah dibuat! Kamu dapat membuatnya muncul di layar pemain dengan mengetik "§6/tag "nama_pemain" add ${val}§r§e".`, 'Sidebar');
 });
 cmd.staticType('remove', 'remove', (plr, val) => {
     if (!sc.has(val))
-        return plr.error(`Sidebar "§6${val}§r§e" does not exsit!`, 'Sidebar');
+        return plr.error(`Sidebar "§6${val}§r§e" tidak ada!`, 'Sidebar');
     sc.delete(val);
-    return plr.send(`The sidebar §6${val}§e has been §6§lDELETED§r§e!`, 'Sidebar');
+    return plr.send(`Sidebar §6${val}§e telah §6§lDIHAPUS§r§e!`, 'Sidebar');
 });
 cmd.dynamicType('preview', ['show', 'preview', 'pushingp'], (plr, _, args) => {
     if (!sc.has(args[0]))
-        return plr.error(`Sidebar "§6${args[0]}§r§e" does not exsit!`, 'Sidebar');
+        return plr.error(`Sidebar "§6${args[0]}§r§e" tidak ada!`, 'Sidebar');
     let board = sc.read(args[0]).join('§r\n').replace(/\(rank\)/g, plr.getPrefixes().join('§r§7, ') + '§r').replace(/\(name\)/g, plr.getNameColor() + '§r');
     if (/(?<=\(score:).+?(?=\))/.test(board))
         board.match(/(?<=\(score:).+?(?=\))/g).map((obj) => {
@@ -76,52 +58,52 @@ cmd.dynamicType('preview', ['show', 'preview', 'pushingp'], (plr, _, args) => {
 }, 'any');
 cmd.dynamicType('setline', ['setline', 'addline', 'newline', 'sl'], (plr, _, args) => {
     if (!sc.has(args[0]))
-        return plr.error(`Sidebar "§6${args[0]}§r§e" does not exsit!`, 'Sidebar');
+        return plr.error(`Sidebar "§6${args[0]}§r§e" tidak ada!`, 'Sidebar');
     if (!args[1])
-        return plr.error('Please type a number', 'Sidebar');
+        return plr.error('Silakan ketik angka.', 'Sidebar');
     let line = args[1], lineChars = args[2].join(' ');
     if (line > 16)
-        return plr.error('You cannt have more than 16 lines sorry :(', 'Sidebar');
+        return plr.error('Maaf, kamu tidak dapat memiliki lebih dari 16 baris.', 'Sidebar');
     if (line < 1)
-        return plr.error('There are no lines less than 1 bozo', 'Sidebar');
+        return plr.error('Tidak ada baris kurang dari 1, teman.', 'Sidebar');
     if (lineChars.includes('\\n'))
-        return plr.error(`You cannot go to the next line when you in line §6${line}§e!`, 'Sidebar');
+        return plr.error(`Kamu tidak dapat pindah ke baris berikutnya saat berada di baris §6${line}§e!`, 'Sidebar');
     if (line > sc.read(args[0]).length + 1)
-        return plr.error(`You haven't made line §6${line - 1}§e yet!`, 'Sidebar');
+        return plr.error(`Kamu belum membuat baris §6${line - 1}§e!`, 'Sidebar');
     let board = sc.read(args[0]);
     board.splice(line - 1, 1, lineChars);
     sc.write(args[0], board);
-    return plr.send(`Line §6${line}§e on sidebar "§6${args[0]}§r§e" has been set to "§6${lineChars}§r§e"!`, 'Sidebar');
+    return plr.send(`Baris §6${line}§e pada sidebar "§6${args[0]}§r§e" telah diatur menjadi "§6${lineChars}§r§e"!`, 'Sidebar');
 }, 'sl:sidebar');
 cmd.numberType('sl:line', null, 'anynull');
 cmd.unknownType('sl:sidebar', null, 1, false, 'sl:line');
 cmd.dynamicType('removeline', ['delline', 'd', 'removeline'], (plr, _, args) => {
     if (!sc.has(args[0]))
-        return plr.error(`Sidebar "§6${args[0]}§r§e" does not exsit!`, 'Sidebar');
+        return plr.error(`Sidebar "§6${args[0]}§r§e" tidak ada!`, 'Sidebar');
     if (!args[1])
-        return plr.error('Please type a number', 'Sidebar');
+        return plr.error('Silakan ketikkan sebuah angka.', 'Sidebar');
     let line = args[1];
     if (line > 16)
-        return plr.error('I bet you don\'t have more than 16 liness', 'Sidebar');
+        return plr.error('Aku bertaruh kamu tidak memiliki lebih dari 16 baris.', 'Sidebar');
     if (line < 1)
-        return plr.error('There are no lines less than 1 bozo', 'Sidebar');
+        return plr.error('Tidak ada baris yang kurang dari 1, kawan.', 'Sidebar');
     if (line > sc.read(args[0]).length + 1)
-        return plr.error(`You haven't even made line §6${line - 1}§e yet!`, 'Sidebar');
+        return plr.error(`Kamu bahkan belum membuat baris §6${line - 1}§e!`, 'Sidebar');
     let board = sc.read(args[0]);
     board.splice(line - 1, 1);
     sc.write(args[0], board);
-    return plr.send(`Line §6${line}§e on sidebar "§6${args[0]}§r§e" has been §6§lremoved§r§e!`, 'Sidebar');
+    return plr.send(`Baris §6${line}§e pada sidebar "§6${args[0]}§r§e" telah §6§ldihapus§r§e!`, 'Sidebar');
 }, 'rl:sidebar');
 cmd.numberType('rl:line', null);
 cmd.unknownType('rl:sidebar', null, 1, false, 'rl:line');
 cmd.dynamicType('settag', ['st', 'settag', 'maketag'], (plr, _, args) => {
     if (!sc.has(args[0]))
-        return plr.error(`Sidebar "§6${args[0]}§r§e" does not exsit!`, 'Sidebar');
+        return plr.error(`Sidebar "§6${args[0]}§r§e" tidak ada!`, 'Sidebar');
     if (args[1].replace(/[a-zA-Z0-9]/g, '') !== '')
-        return plr.error('You cannot use special characters!', 'Sidebar');
+        return plr.error('Kamu tidak dapat menggunakan karakter!', 'Sidebar');
     sc.write(args[1], sc.read(args[0]));
     sc.delete(args[0]);
-    return plr.send(`The sidebar §6${args[0]}§e has been renamed to §6${args[1]}§e.`, 'Sidebar');
+    return plr.send(`Sidebar §6${args[0]}§e telah diubah namanya menjadi §6${args[1]}§e.`, 'Sidebar');
 }, 'st:any');
 cmd.unknownType('st:any', null, 1, false, 'st:tag');
 cmd.unknownType('st:tag', null, 1);
@@ -130,8 +112,9 @@ cmd.staticType('list', 'list', (plr) => {
     for (let key in sc.getCollection())
         allBoards.push(`§lTag: §6${key}§r§6`);
     if (allBoards.length > 0)
-        return plr.send(`This server has total of §6${allBoards.length}§e sidebars(s)! Here's the list of them: \n` + allBoards.join('\n'), 'SIDEBAR');
-    return plr.error('It seems like this server doesn\'t have have any sidebar...', 'SIDEBAR');
+        return plr.send(`Server ini memiliki total §6${allBoards.length}§e sidebar! Berikut adalah daftar sidebar yang tersedia:
+${allBoards.join('\n')}`, 'SIDEBAR');
+    return plr.error('Sepertinya server ini tidak memiliki sidebar saat ini.', 'SIDEBAR');
 }, null, false);
 system.runInterval(() => {
     if (!sc)

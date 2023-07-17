@@ -1,28 +1,10 @@
-/*
-ROT Developers and Contributors:
-Moises (OWNER/CEO/Developer),
-Aex66 (Developer)
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-__________ ___________________
-\______   \\_____  \__    ___/
- |       _/ /   |   \|    |
- |    |   \/    |    \    |
- |____|_  /\_______  /____|
-        \/         \/
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-© Copyright 2023 all rights reserved by Mo9ses. Do NOT steal, copy the code, or claim it as yours!
-Please message Mo9ses#8583 on Discord, or join the ROT discord: https://discord.com/invite/2ADBWfcC6S
-Docs: https://docs.google.com/document/d/1hasFU7_6VOBfjXrQ7BE_mTzwacOQs5HC21MJNaraVgg
-Website: https://www.rotmc.ml
-Thank you!
-*/
 import quick from '../../quick.js';
 import Commands from '../../Papers/CommandPaper/CommandPaper.js';
 import Server from '../../Papers/ServerPaper.js';
 import Database from '../../Papers/DatabasePaper.js';
 const cmd = Commands.create({
     name: 'rottle',
-    description: 'A fun little word game were you have to guess the word that ROT is thinking of :)',
+    description: 'Sebuah permainan kata yang menyenangkan di mana kamu harus menebak kata yang dipikirkan oleh Skytopia :)',
     aliases: ['rm', 'rottie'],
     category: 'Fantasy',
     developers: ['Aex66']
@@ -35,20 +17,20 @@ cmd.startingArgs(['play', 'try', 'quit', 'stats']);
 cmd.callback((plr) => !rottle.has(plr.rID) && rottle.write(plr.rID, { inMatch: false }));
 cmd.staticType('play', 'play', (plr) => {
     if (rottle.read(plr.rID).inMatch)
-        return plr.error('You cannot start a game with me if you are already in a game with me! Type "§4!rm quit§c" in chat and give me the win loser');
+        return plr.error('Kamu tidak dapat memulai permainan dengan saya jika kamu sudah berada dalam permainan dengan saya! Ketik "§4!rm quit§c" di chat dan berikan kemenangan kepadaku, pecundang.');
     rottle.write(plr.rID, Object.assign(rottle.read(plr.rID), {
         inMatch: true,
         word: words[~~(Math.random() * words.length)],
         attempts: 0,
         matchesPlayed: (rottle.read(plr.rID)?.matchesPlayed ?? 0) + 1
     }));
-    plr.send(`The match has started! The word I am thinking of is §c${rottle.read(plr.rID).word.length}§7 letters long! You only get §c${quick.rottleAttemps}§7 attempts!`);
+    plr.send(`Pertandingan telah dimulai! Kata yang saya pikirkan memiliki panjang §c${rottle.read(plr.rID).word.length}§7 huruf! Kamu hanya memiliki §c${quick.rottleAttemps}§7 percobaan!`);
 }, null, false);
 cmd.staticType('try', 'try', (plr, val) => {
     if (!rottle.read(plr.rID).inMatch)
-        return plr.error('You are not in a match with me yet... Type "§4!rm play§c" in chat to start one.');
+        return plr.error('Kamu belum berada dalam pertandingan dengan saya... Ketik "§4!rm play§c" di chat untuk memulai pertandingan.');
     if (val.split(' ')?.length > 1)
-        return plr.error('It\'s only one word, and the word doesn\'t have any numbers or stuff like that. Don\'t worry, I didn\'t count that as a "attempt"');
+        return plr.error('Hanya ada satu kata, dan kata tersebut tidak mengandung angka atau karakter seperti itu. Jangan khawatir, saya tidak menghitung itu sebagai "percobaan"');
     rottle.write(plr.rID, Object.assign(rottle.read(plr.rID), { attempts: rottle.read(plr.rID).attempts + 1 }));
     if (rottle.read(plr.rID).word === val) {
         rottle.write(plr.rID, Object.assign(rottle.read(plr.rID), {
@@ -56,7 +38,9 @@ cmd.staticType('try', 'try', (plr, val) => {
             wins: (rottle.read(plr.rID)?.wins ?? 0) + 1,
             averageAttempts: (rottle.read(plr.rID)?.averageAttempts ?? 0) + rottle.read(plr.rID).attempts
         }));
-        return plr.send(`Dang, you actally got the word right... GG\n§aWord:§c ${rottle.read(plr.rID).word}\n§aAttempts:§c ` + rottle.read(plr.rID).attempts);
+        return plr.send(`Hebat, kamu berhasil menebak kata yang benar! Selamat bermain! 
+    Kata yang tepat adalah: §c${rottle.read(plr.rID).word}
+    Jumlah percobaan: §c${quick.rottleAttempts}` + rottle.read(plr.rID).attempts);
     }
     if (rottle.read(plr.rID).attempts >= quick.rottleAttemps) {
         rottle.write(plr.rID, Object.assign(rottle.read(plr.rID), {
@@ -65,21 +49,22 @@ cmd.staticType('try', 'try', (plr, val) => {
         }));
         if (quick.rottleRewards.length)
             Server.queueCommands(quick.rottleRewards.map((c) => c.replace('@rottler', `"${plr.name}"`)));
-        return plr.send(`§cTen strikes, your OUT!§7 Thanks for the free win! The word was §c${rottle.read(plr.rID).word}§7 by the way XD.`);
+        return plr.send(`§cSepuluh kesalahan, kamu kalah!§7 Terima kasih atas kemenangan mudahnya! Kata yang harus ditebak adalah §c${rottle.read(plr.rID).word}§7, hehe XD.`);
     }
     let tryWord = val.split('').map(letter => rottle.read(plr.rID).word.split('').includes(letter) ? `§a${letter}` : `§4${letter}`);
-    plr.send(`§cWrong!§7 Here are the letters that are in that word: §l${tryWord.join('')}§r§7. You have §c${10 - rottle.read(plr.rID).attempts}§7 attempts left!`);
+    plr.send(`§cSalah!§7 Berikut adalah huruf-huruf yang ada dalam kata tersebut: §l${tryWord.join('')}§r§7. Kamu masih memiliki §c${10 - rottle.read(plr.rID).attempts}§7 percobaan tersisa!`);
 });
 cmd.staticType('quit', 'quit', (plr) => {
     if (!rottle.read(plr.rID).inMatch)
-        return plr.error('You are not in a match with me yet... Type "§4!rm play§c" in chat to start one.');
+        return plr.error('Kamu belum berada dalam pertandingan dengan saya... Ketik "§4!rm play§c" di chat untuk memulai pertandingan.');
     rottle.write(plr.rID, Object.assign(rottle.read(plr.rID), {
         inMatch: false,
         losses: (rottle.read(plr.rID)?.losses ?? 0) + 1
     }));
-    plr.send('Thanks for the free win loser!');
+    plr.send('Terima kasih atas kemenangan gratis, pecundang!');
 }, null, false);
-cmd.dynamicType('stats', ['stats', 's', 'sto'], plr => plr.send(`Here are your stats:\n§aWins:§c ${rottle.read(plr.rID)?.wins ?? 0}\n§aLosses:§c ${rottle.read(plr.rID)?.losses ?? '0?!?! Impossible!'}\n§aWin-loss ratio:§c ${(rottle.read(plr.rID)?.wins / rottle.read(plr.rID)?.losses)}\n§aMatches played:§c ${rottle.read(plr.rID)?.matchesPlayed ?? 0}\n§aAverage attemps before a win:§c ` + (rottle.read(plr.rID)?.averageAttempts / rottle.read(plr.rID)?.wins)));
+cmd.dynamicType('stats', ['stats', 's', 'sto'], plr => plr.send(`Berikut adalah statistikmu:
+§aKemenangan:§c ${rottle.read(plr.rID)?.wins ?? 0}\n§aKalah:§c ${rottle.read(plr.rID)?.losses ?? '0?!?! Mustahil!'}\n§aRasio kemenangan-kekalahan:§c ${(rottle.read(plr.rID)?.wins / rottle.read(plr.rID)?.losses)}\n§aJumlah pertandingan:§c ${rottle.read(plr.rID)?.matchesPlayed ?? 0}\n§aRata-rata percobaan sebelum menang:§c ` + (rottle.read(plr.rID)?.averageAttempts / rottle.read(plr.rID)?.wins)));
 const words = [
     'cattle',
     'resident',

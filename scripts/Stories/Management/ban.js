@@ -1,21 +1,3 @@
-/*
-ROT Developers and Contributors:
-Moises (OWNER/CEO/Developer),
-Aex66 (Developer)
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-__________ ___________________
-\______   \\_____  \__    ___/
- |       _/ /   |   \|    |
- |    |   \/    |    \    |
- |____|_  /\_______  /____|
-        \/         \/
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-© Copyright 2023 all rights reserved by Mo9ses. Do NOT steal, copy the code, or claim it as yours!
-Please message Mo9ses#8583 on Discord, or join the ROT discord: https://discord.com/invite/2ADBWfcC6S
-Docs: https://docs.google.com/document/d/1hasFU7_6VOBfjXrQ7BE_mTzwacOQs5HC21MJNaraVgg
-Website: https://www.rotmc.ml
-Thank you!
-*/
 import { system } from '@minecraft/server';
 import Commands from '../../Papers/CommandPaper/CommandPaper.js';
 import Database from '../../Papers/DatabasePaper.js';
@@ -32,7 +14,7 @@ export const ban = {
 })();
 const cmd = Commands.create({
     name: 'ban',
-    description: 'A simple ban command...',
+    description: 'banned pemain',
     aliases: ['tempban', 'bam'],
     category: 'Management',
     admin: true,
@@ -41,17 +23,17 @@ const cmd = Commands.create({
 cmd.startingArgs('player');
 cmd.playerType('player', (plr, val, args) => {
     if (val.player?.isAdmin)
-        return plr.send('You cannot ban an administrator');
+        return plr.send('Kamu tidak bisa membanned administrator');
     if (args[1]?.includes('$-$'))
-        return plr.error('You cannot use "$-$" in the reason.');
+        return plr.error('Kamu tidak bisa menggunakan "$-$" di alasan.');
     if (val.name.includes('$-$'))
-        return plr.error('That player seems to have an illegal name!');
+        return plr.error('Pemain itu sepertinya memiliki nama yang melanggar peraturan.');
     console.warn(val?.rID);
-    plr.send(`You have just banned §a${val.name}`);
+    plr.send(`Kamu baru saja mem-banned §a${val.name}§e.`);
     const data = ban.regExpire.find(Number(val.rID));
     if (data)
         ban.regExpire.delete(data);
-    ban.regReason.write(`${val?.name}$-$${args[1] || 'No reason specified'}$-$${val.rID}`, Number(val.rID));
+    ban.regReason.write(`${val?.name}$-$${args[1] || 'Tidak ada alasan.'}$-$${val.rID}`, Number(val.rID));
     ban.regExpire.write(`${Date.now() + args[0]}$-$${val.rID}`, Number(val.rID));
 }, false, 'time', { self: false }, true);
 cmd.timeType('time', null, 'reason', null, false);
@@ -65,9 +47,11 @@ system.runInterval(() => {
             continue;
         const expire = Number(date?.split('$-$')?.[0]) ?? 0;
         if (Date.now() < expire)
-            return player.runCommand(`kick "${player.name}" \n§7Reason: ${reason?.split('$-$')?.[1]}\nY§7our ban will expire in: §c${MS(expire - Date.now())}`);
+            return player.runCommand(`Menendang "${player.name}"
+Alasan: ${reason?.split('$-$')?.[1]}
+Larangan kamu akan berakhir dalam: ${MS(expire - Date.now())}`);
         ban.regExpire.delete(date);
         ban.regReason.delete(reason);
-        console.warn(`Player §c${player.name}§r with ID §c${rID}§r got unbanned!`);
+        console.warn(`Pemain §c${player.name}§r dengan ID §c${rID}§r telah dibebaskan dari unbanned!`);
     }
 });

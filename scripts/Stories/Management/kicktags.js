@@ -1,21 +1,3 @@
-/*
-ROT Developers and Contributors:
-Moises (OWNER/CEO/Developer),
-Aex66 (Developer)
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-__________ ___________________
-\______   \\_____  \__    ___/
- |       _/ /   |   \|    |
- |    |   \/    |    \    |
- |____|_  /\_______  /____|
-        \/         \/
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-© Copyright 2023 all rights reserved by Mo9ses. Do NOT steal, copy the code, or claim it as yours!
-Please message Mo9ses#8583 on Discord, or join the ROT discord: https://discord.com/invite/2ADBWfcC6S
-Docs: https://docs.google.com/document/d/1hasFU7_6VOBfjXrQ7BE_mTzwacOQs5HC21MJNaraVgg
-Website: https://www.rotmc.ml
-Thank you!
-*/
 import { system, world } from '@minecraft/server';
 import { sleep } from '../../Papers/Paragraphs/ExtrasParagraphs.js';
 import Commands from '../../Papers/CommandPaper/CommandPaper.js';
@@ -24,7 +6,7 @@ import Player from '../../Papers/PlayerPaper.js';
 import quick from '../../quick.js';
 const cmd = Commands.create({
     name: 'kt',
-    description: 'This command will kick any players from the game with a certain tag',
+    description: 'Perintah ini akan menendang pemain dari permainan dengan tag tertentu.',
     aliases: ['ktag', 'ktags', 'kicktag', 'kicktags'],
     category: 'Management',
     admin: true,
@@ -56,7 +38,7 @@ system.runInterval(async () => {
     for (const player of world.getPlayers()) {
         if (!player.hasTag(tag) || !Player.isConnected(player) || Player.isAdmin(player))
             continue;
-        player.dimension.runCommandAsync(`kick "${player.name}" ${reason ?? 'No reason!'}`);
+        player.dimension.runCommandAsync(`kick "${player.name}" ${reason ?? 'Tidak ada alasan!'}`);
         await sleep(10);
     }
 }, 25);

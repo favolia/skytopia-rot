@@ -1,7 +1,7 @@
 import Commands from "../../Papers/CommandPaper/CommandPaper.js";
 const cmd = Commands.create({
     name: 'inven',
-    description: 'This command will let you see another player\'s inventory.',
+    description: 'Perintah ini akan memungkinkanmu untuk melihat inventaris pemain lain.',
     aliases: ['inventory', 'see', 'inven-see', 'inven-see', 'inv'],
     category: 'Management',
     admin: true,
@@ -18,7 +18,7 @@ cmd.dynamicType('inv', ['inv', 'inven', 'inventory'], (plr, _, target) => {
             continue;
         plrInv.setItem(i, item.clone());
     }
-    plr.send(`Your inventory has been replace with a exact copy of §c${target[0].name}'s§e inventory.`);
+    plr.send(`Inventaris kamu telah digantikan dengan salinan persis dari inventaris §c${target[0].name}§e.`);
 }, 'plr');
 cmd.dynamicType('chat', ['chat', 'cht', 'text', 'txt'], (plr, _, target) => {
     const items = [], tarInv = target[0].getComponent('inventory').container;
@@ -26,8 +26,8 @@ cmd.dynamicType('chat', ['chat', 'cht', 'text', 'txt'], (plr, _, target) => {
         const item = tarInv.getItem(i);
         if (!item)
             continue;
-        items.push(`§a${item.type.id}§b >§e amount: §a${item.amount}§e, lore: §a${item.getLore().join(' §e(next line)§a ') || '§cnone'}`);
+        items.push(`§a${item.type.id}§b >§e jumlah: §a${item.amount}§e, lore: §a${item.getLore().join(' §e(baris berikutnya)§a ') || '§cnone'}`);
     }
     plr.sendMessage(items.join('\n'));
-    plr.send(`§c${target[0].name}'s§e inventory has been relayed in chat. Keep in mind this is not as accurate as making a copy in your inventory.`);
+    plr.send(`Inventory §c${target[0].name}§e telah dipaparkan di chat. Harap diingat bahwa ini tidak seakurat membuat salinan di Inventorymu sendiri.`);
 }, 'plr');
