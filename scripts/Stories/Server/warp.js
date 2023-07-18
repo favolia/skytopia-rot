@@ -37,20 +37,20 @@ cmd.staticType('remove', 'remove', (plr, val) => {
     const warps = Server.db.read('warps');
     if (!warps.hasOwnProperty(val))
         return plr.error('Server ini tidak memiliki warp dengan nama tersebut.');
-    plr.send(`Successfully removed warp with the name §c${val}§e at: §a${warps[val][1][0]}§e, §a${warps[val][1][1]}§e, §a${warps[val][1][2]}§e, §din the ${warps[val][1][3].replace('minecraft:', '')}§e.`);
+    plr.send(`Berhasil menghapus warp dengan nama §c${val}§e pada koordinat: §a${warps[val][1][0]}§e, §a${warps[val][1][1]}§e, §a${warps[val][1][2]}§e, §ddi dimensi ${warps[val][1][3].replace('minecraft:', '')}§e..`);
     delete warps[val];
     Server.db.write('warps', warps);
 });
 cmd.unknownType('warp', (plr, val, args) => {
     const warp = Object.entries(Server.db.read('warps')).find(w => w[0] === val && (plr.isAdmin || !w[1][0] ? true : plr.hasTag(w[1][0])));
     if (!warp)
-        return plr.error('This server doesn\'t have a warp with that name. Make sure it exist and you have permission to teleport to it.');
+        return plr.error('Server ini tidak memiliki warp dengan nama tersebut. Pastikan warp tersebut ada dan kamu memiliki izin untuk melakukan teleportasi ke sana.');
     const target = args.length ? args[0] : plr;
     if (target.name !== plr.name && !plr.isAdmin)
-        return plr.error('You don\'t have perrmission to teleport other players');
+        return plr.error('Kamu tidak memiliki izin untuk melakukan teleportasi pada pemain lain.');
     target.addTag(quick.epics['Automod'].protections.teleport.skip);
     target.teleport({ x: warp[1][1][0], y: warp[1][1][1], z: warp[1][1][2] }, { dimension: world.getDimension(warp[1][1][3]), rotation: { x: target.getRotation().x, y: target.getRotation().y } });
-    target.send(`You have been teleported to §a§l${val}§r§e.`);
+    target.send(`Kamu telah melakukan teleportasi ke §a§l${val}§r§e.`);
 }, 1, true, 'plr');
 cmd.config(['set', 'remove'], {
     admin: true

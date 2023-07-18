@@ -1,21 +1,3 @@
-/*
-ROT Developers and Contributors:
-Moises (OWNER/CEO/Developer),
-Aex66 (Developer)
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-__________ ___________________
-\______   \\_____  \__    ___/
- |       _/ /   |   \|    |
- |    |   \/    |    \    |
- |____|_  /\_______  /____|
-        \/         \/
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-© Copyright 2023 all rights reserved by Mo9ses. Do NOT steal, copy the code, or claim it as yours!
-Please message Mo9ses#8583 on Discord, or join the ROT discord: https://discord.com/invite/2ADBWfcC6S
-Docs: https://docs.google.com/document/d/1hasFU7_6VOBfjXrQ7BE_mTzwacOQs5HC21MJNaraVgg
-Website: https://www.rotmc.ml
-Thank you!
-*/
 import { system, world } from '@minecraft/server';
 import { metricNumbers } from '../../Papers/Paragraphs/ConvertersParagraphs.js';
 import { connected } from '../../Tales/playerConnect.js';
@@ -25,7 +7,7 @@ import Server from '../../Papers/ServerPaper.js';
 import Player from '../../Papers/PlayerPaper.js';
 const cmd = Commands.create({
     name: 'leaderboard',
-    description: 'This is the command everyone has been waiting for (not really), LEADERBOARDS',
+    description: 'Ini dia perintah yang telah ditunggu-tunggu oleh semua orang (ngga juga mwhehe), LEADERBOARDS!',
     aliases: ['lb', 'leadb', 'lead', 'lboard', 'leader'],
     category: 'Structure',
     admin: true,
@@ -46,15 +28,15 @@ cmd.staticType('create', 'create', (player, value, args) => {
         world.afterEvents.entitySpawn.unsubscribe(hologram);
     });
     player.dimension.spawnEntity('rot:hologram', player.location);
-    player.send(`Successfully created a leaderboard displaying the objective "§6${value}§r§e".§r`);
+    player.send(`Berhasil membuat leaderboard yang menampilkan objektif "§6${value}§r§e".`);
 }, 'length', true, false);
 cmd.numberType('length', null, null, { min: 4, max: 16 });
 cmd.staticType('delete', 'delyeet', async (plr) => {
     let entity = Array.from(plr.dimension.getEntities({ type: 'rot:hologram', tags: ['ROTLB'], maxDistance: 2, location: plr.toLocation() }))[0];
     if (!entity)
-        return plr.error('Unable to locate a leaderboard within the radius of §a2§e blocks. Maybe move a bit closer?§r');
+        return plr.error('Tidak dapat menemukan leaderboard dalam jarak §a2§e blok. Mungkin kamu perlu mendekat sedikit?');
     const obj = entity.getTags().find(tag => tag.startsWith('o:')).replace('o:', ''), db = await Database.register(obj, 'ROTLB');
-    plr.send(`Successfully removed a nearby leaderboard displaying the objective "§c${obj}§r§e".`);
+    plr.send(`Berhasil menghapus leaderboard di dekat yang menampilkan objektif "§c${obj}§r§e".`);
     db.write('l', db.read('l') - 1);
     if (!db.read('l'))
         Database.drop(obj, 'ROTLB');
@@ -64,19 +46,19 @@ cmd.bridge('set', 'set', ['long', 'head']);
 cmd.dynamicType('long', ['length', 'long', 'l'], (plr, _, args) => {
     let entity = Array.from(plr.dimension.getEntities({ type: "rot:hologram", tags: ['ROTLB'], maxDistance: 2, location: plr.toLocation() }))[0];
     if (!entity)
-        return plr.error('Unable to locate a leaderboard within the radius of §a2§e blocks. Maybe move a bit closer?§r');
+        return plr.error('Tidak dapat menemukan leaderboard dalam jarak §a2§e blok. Mungkin kamu perlu mendekat sedikit?');
     entity.removeTag(entity.getTags().find(tag => tag.startsWith('l:')));
     entity.addTag(`l:${args[0]}`);
-    plr.send(`Successfully changed the length of the leaderboard "§c${entity.getTags().find(tag => tag.startsWith('o:')).replace('o:', '')}§r§e".`);
+    plr.send(`Berhasil mengubah panjang leaderboard "§c${entity.getTags().find(tag => tag.startsWith('o:')).replace('o:', '')}§r§e".`);
 }, 'length');
 cmd.dynamicType('head', ['head', 'header', 'h'], (plr, _, args) => {
     console.warn(args);
     let entity = Array.from(plr.dimension.getEntities({ type: "rot:hologram", tags: ['ROTLB'], maxDistance: 2, location: plr.toLocation() }))[0];
     if (!entity)
-        return plr.error('Unable to locate a leaderboard within the radius of §a2§e blocks. Maybe move a bit closer?§r');
+        return plr.error('Tidak dapat menemukan leaderboard dalam jarak §a2§e blok. Mungkin kamu perlu mendekat sedikit?');
     entity.removeTag(entity.getTags().find(tag => tag.startsWith('h:')));
     entity.addTag(`h:${args[0]?.join(' ') ?? `§4§l${entity.getTags().find(tag => tag.startsWith('o:')).toUpperCase().slice(2)}§r§c LEADERBOARD§r`}`);
-    plr.send(`Successfully changed the heading of the leaderboard "§c${entity.getTags().find(tag => tag.startsWith('o:')).replace('o:', '')}§r§e".`);
+    plr.send(`Berhasil mengubah judul leaderboard "§c${entity.getTags().find(tag => tag.startsWith('o:')).replace('o:', '')}§r§e".`);
 }, 'name');
 cmd.unknownType('name');
 system.runInterval(() => {
